@@ -14,9 +14,9 @@
     <body>
     <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
     <c:if test="${not empty exception}">
-        <form action="login" method="POST">
+        <form action="loginServlet" method="POST">
             Login:<input type="text" name="login"/>
-            Hasło:<input type="password" name="pass"/>
+            Hasło:<input type="password" name="password"/>
             <input type="submit" value="Zaloguj"/>
         </form>
     </c:if>
