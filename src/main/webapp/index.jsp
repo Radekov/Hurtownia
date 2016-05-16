@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>Hello ${sessionScope.login}</h1></c:catch>
+    <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
     <c:if test="${not empty exception}">
         <form action="login" method="POST">
             Login:<input type="text" name="login"/>
@@ -33,7 +33,7 @@
         <form action="shops/index.jsp">
             <input type="submit" value="Przeglądaj sklepy"/>
         </form>
-        <form action="orders/index.jsp">
+        <form action="sendProductsToOrders">
             <input type="submit" value="Przeglądaj zamówienia"/>
         </form>
     </c:if>

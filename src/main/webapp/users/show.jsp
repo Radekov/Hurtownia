@@ -14,11 +14,11 @@
     </head>
     <body>
         <a href="index.jsp">POWRÓT</a>
-    <c:catch var="exception"><h1>Hello ${sessionScope.login}</h1></c:catch>
-    <c:if test="${sessionScope.login == null}">
+    <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
+    <c:if test="${sessionScope.sign == null}">
         <%--POWRÓT--%>
     </c:if>
-    <c:if test="${sessionScope.login == null}">
+    <c:if test="${sessionScope.sign == null}">
         <table>
             <thead>
                 <tr>

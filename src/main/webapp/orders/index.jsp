@@ -12,7 +12,7 @@
         <title>Zamówienia</title>
     </head>
     <body>
-        <c:catch var="exception"><h1>${sessionScope.login}</h1></c:catch>
+        <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
         <c:if test="${not empty exception}">
             <%--POWRÓT--%>
         </c:if>
@@ -29,7 +29,12 @@
 
             <form action="addOrder"><%--Tu dużo zmienić--%>
                 Dodanie nowego zamówienia:
-                Sklep:<input type="text" name="nazwa" ><%--type lista rozwijana--%>
+                Sklep:
+                <select name="sklep">
+                    <c:forEach var="shop" items="${requestScope.shops}">
+                        <option value="${shop.sklep}">${shop.sklep}</option>
+                    </c:forEach>
+                </select>
                 Produkty:
                 <c:forEach var="produkt" items="${requestScope.produkty}">
                     ${produkt.nazwa}<input type="checkbox" name="${produkt.nazwa}"/>

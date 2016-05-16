@@ -12,7 +12,7 @@
         <title>Sklepy</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>${sessionScope.login}</h1></c:catch>
+    <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
     <c:if test="${not empty exception}">
         <%--POWRÓT--%>
     </c:if>

@@ -50,11 +50,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addShop</servlet-name>
-        <url-pattern>/addShop</url-pattern>
+        <url-pattern>/shops/addShop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>showAllShops</servlet-name>
-        <url-pattern>/showAllShops</url-pattern>
+        <url-pattern>/shops/showAllShops</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
