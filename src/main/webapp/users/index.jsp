@@ -17,9 +17,6 @@
         <%--POWRÓT--%>
     </c:if>
     <c:if test="${empty exception}">
-        <form action="LogoutServlet">
-            <input type="submit" value="Wyloguj"/>
-        </form>
         <form action="showAllUsers">
             Pokazanie wszystkich:<input type="text" name="login" title="By pokazać wszystkich zostaw puste"/>
             <input type="submit" value="Pokaż wsio"/>

@@ -5,9 +5,11 @@
  */
 package pl.pawww.hurt.jpa;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,5 +29,11 @@ public class ProductsFacade extends AbstractFacade<Products> {
     public ProductsFacade() {
         super(Products.class);
     }
-    
+    public List<Products> findAllByNazwa(String nazwa){
+        TypedQuery<Products> query = em.createNamedQuery("Products.findByNazwa", Products.class);
+        query.setParameter("nazwa", nazwa);
+        List<Products> result = query.getResultList();
+        return result;
+
+    }
 }

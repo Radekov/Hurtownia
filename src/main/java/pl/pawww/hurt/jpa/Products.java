@@ -6,6 +6,7 @@
 package pl.pawww.hurt.jpa;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -41,7 +42,7 @@ public class Products implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    private BigInteger cena;
+    private BigDecimal cena;
     @Size(max = 255)
     private String kategoria;
     @Column(name = "LICZBA_SZTUK")
@@ -66,11 +67,11 @@ public class Products implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getCena() {
+    public BigDecimal getCena() {
         return cena;
     }
 
-    public void setCena(BigInteger cena) {
+    public void setCena(BigDecimal cena) {
         this.cena = cena;
     }
 

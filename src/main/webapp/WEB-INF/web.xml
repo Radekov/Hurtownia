@@ -8,6 +8,14 @@
         <servlet-name>showAllUsers</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.users.showAllUsers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addProduct</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.products.addProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>showAllShops</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.products.showAllShops</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addUser</servlet-name>
         <url-pattern>/users/addUser</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>showAllUsers</servlet-name>
         <url-pattern>/users/showAllUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addProduct</servlet-name>
+        <url-pattern>/products/addProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>showAllShops</servlet-name>
+        <url-pattern>/products/showAllShops</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
