@@ -14,44 +14,34 @@
     </head>
     <body>
         <a href="index.jsp">POWRÓT</a>
-    <c:catch var="exception"><h1>Hello ${sessionScope.login}</h1></c:catch>
-    <c:if test="${sessionScope.login == null}">
-        <%--POWRÓT--%>
-    </c:if>
-    <c:if test="${sessionScope.login == null}">
-        <table>
-            <thead>
-                <tr>
-                    <td>
-                        Nazwa
-                    </td>
-                    <td>
-                        Kategoria
-                    </td>
-                    <td>
-                        Liczba Sztuk
-                    </td>
-                    <td>
-                        Cena
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="product" items="${requestScope.products}">
+        <c:catch var="exception"><h1>Hello ${sessionScope.login}</h1></c:catch>
+        <c:if test="${sessionScope.login == null}">
+            <%--POWRÓT--%>
+        </c:if>
+        <c:if test="${sessionScope.login == null}">
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            ${product.nazwa}
-                        </td>
-                        <td>
-                            ${product.kategoria}
-                        </td>
-                        <td>
-                            ${product.liczbaSztuk}
-                        </td>
-                        <td>
-                            ${product.cena}
-                        </td>
+                        <td>ID</td>
+                        <td>Nazwa</td>
+                        <td>Kategoria</td>
+                        <td>Liczba Sztuk</td>
+                        <td>Cena</td>
+                        <td></td>
                     </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="product" items="${requestScope.products}">
+                    <form action="modyfikujProdukt">
+                        <tr>
+                            <td><input type="number" value="${product.id}" name="id" readonly/></td>
+                            <td>${product.nazwa}</td>
+                            <td>${product.kategoria}</td>
+                            <td><input type="number" value="${product.liczbaSztuk}" name="liczbaSztuk"/></td>
+                            <td><input type="text" value="${product.cena}" name="cena"/></td>
+                            <td><input type="submit" value="Modyfikuj"</td>
+                        </tr>
+                    </form>
                 </c:forEach>
             </tbody>
         </table>

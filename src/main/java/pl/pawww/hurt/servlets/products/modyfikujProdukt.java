@@ -6,7 +6,8 @@
 package pl.pawww.hurt.servlets.products;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +20,7 @@ import pl.pawww.hurt.jpa.ProductsFacade;
  *
  * @author r
  */
-public class showAllShops extends HttpServlet {
+public class modyfikujProdukt extends HttpServlet {
     
     @EJB
     ProductsFacade productsFacade;
@@ -35,17 +36,14 @@ public class showAllShops extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String nazwa = request.getParameter("nazwa");
-        List<Products> products;
-        if(nazwa != null | nazwa.equals("")){
-            products =  productsFacade.findAll();
-        }
-        else{
-            nazwa = "'%" + nazwa + "%'";
-            products = productsFacade.findAllByNazwa(nazwa);
-        }
-        request.setAttribute("products", products);
-        request.getRequestDispatcher("/products/show.jsp").forward(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer liczbaSztuk = Integer.parseInt(request.getParameter("liczbaSztuk"));
+        BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
+        Products product = productsFacade.find(id);
+        product.setLiczbaSztuk(liczbaSztuk);
+        product.setCena(cena);
+        productsFacade.edit(product);
+        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

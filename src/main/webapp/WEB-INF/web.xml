@@ -14,7 +14,11 @@
     </servlet>
     <servlet>
         <servlet-name>showAllShops</servlet-name>
-        <servlet-class>pl.pawww.hurt.servlets.products.showAllShops</servlet-class>
+        <servlet-class>pl.pawww.hurt.servlets.products.showAllProducts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>modyfikujProdukt</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.products.modyfikujProdukt</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addUser</servlet-name>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>showAllShops</servlet-name>
         <url-pattern>/products/showAllShops</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modyfikujProdukt</servlet-name>
+        <url-pattern>/products/modyfikujProdukt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
