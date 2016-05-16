@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.pawww.hurt.servlets.users;
+package pl.pawww.hurt.servlets.shops;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pl.pawww.hurt.jpa.Users;
-import pl.pawww.hurt.jpa.UsersFacade;
+import pl.pawww.hurt.jpa.Shops;
+import pl.pawww.hurt.jpa.ShopsFacade;
 
 /**
  *
  * @author r
  */
-public class showAllUsers extends HttpServlet {
+public class showAllShops extends HttpServlet {
+
     @EJB
-    private UsersFacade usersFacade;
+    ShopsFacade shopsFacade;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,17 +36,17 @@ public class showAllUsers extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String login = request.getParameter("login");
-        List<Users> users;
-        if(login != null | login.equals("")){
-            users =  usersFacade.findAll();
+        String sklep = request.getParameter("login");
+        List<Shops> shops;
+        if(sklep != null | sklep.equals("")){
+            shops =  shopsFacade.findAll();
         }
         else{
-            login = "'%" + login + "%'";
-            users = usersFacade.findAllByLogin(login);
+            sklep = "'%" + sklep + "%'";
+            shops = shopsFacade.findAllBySklep(sklep);
         }
-        request.setAttribute("users", users);
-        request.getRequestDispatcher("/users/show.jsp").forward(request, response);
+        request.setAttribute("shops", shops);
+        request.getRequestDispatcher("/shops/show.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
