@@ -36,6 +36,7 @@ public class modyfikujProdukt extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("Jestem w"+showAllProducts.class.getName()+"---------------------------------------------------");
         Integer id = Integer.parseInt(request.getParameter("id"));
         Integer liczbaSztuk = Integer.parseInt(request.getParameter("liczbaSztuk"));
         BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
@@ -43,6 +44,7 @@ public class modyfikujProdukt extends HttpServlet {
         product.setLiczbaSztuk(liczbaSztuk);
         product.setCena(cena);
         productsFacade.edit(product);
+        System.out.println("Wychodze z:"+showAllProducts.class.getName()+"---------------------------------------------------");
         response.sendRedirect("index.jsp");
     }
 

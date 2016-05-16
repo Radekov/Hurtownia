@@ -35,6 +35,7 @@ public class showAllProducts extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("Jestem w"+showAllProducts.class.getName()+"---------------------------------------------------");
         String nazwa = request.getParameter("nazwa");
         List<Products> products;
         if(nazwa != null | nazwa.equals("")){
@@ -45,6 +46,7 @@ public class showAllProducts extends HttpServlet {
             products = productsFacade.findAllByNazwa(nazwa);
         }
         request.setAttribute("products", products);
+        System.out.println("Wychodze z:"+showAllProducts.class.getName()+"---------------------------------------------------");
         request.getRequestDispatcher("/products/show.jsp").forward(request, response);
     }
 

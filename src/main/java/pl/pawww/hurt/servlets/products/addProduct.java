@@ -48,7 +48,7 @@ public class addProduct extends HttpServlet {
         product.setCena(cena);
         
         productsFacade.create(product);
-        System.out.println("Przeszło dodanie produkt---------------------------------------------------");
+        
         response.sendRedirect("index.jsp");
     }
 
