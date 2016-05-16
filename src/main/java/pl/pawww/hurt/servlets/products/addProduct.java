@@ -40,12 +40,15 @@ public class addProduct extends HttpServlet {
         String kategoria = request.getParameter("kategoria");
         Integer ilosc = Integer.parseInt(request.getParameter("ilosc"));
         BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
+        
         Products product = new Products();
         product.setNazwa(nazwa);
         product.setKategoria(kategoria);
         product.setLiczbaSztuk(ilosc);
         product.setCena(cena);
+        
         productsFacade.create(product);
+        System.out.println("Przeszło dodanie produkt---------------------------------------------------");
         response.sendRedirect("index.jsp");
     }
 

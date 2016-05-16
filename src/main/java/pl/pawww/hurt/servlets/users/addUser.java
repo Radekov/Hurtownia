@@ -36,9 +36,11 @@ public class addUser extends HttpServlet {
             throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        
         Users u = new Users();
         u.setLogin(login);
         u.setPassword(password);
+        
         usersFacade.create(u);
         response.sendRedirect("index.jsp");
     }
