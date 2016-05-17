@@ -13,14 +13,15 @@
     </head>
     <body>
     <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
-    <c:if test="${not empty exception}">
+    <c:if test="${sessionScope.sign == null}">
         <form action="loginServlet" method="POST">
             Login:<input type="text" name="login"/>
             Hasło:<input type="password" name="password"/>
+            Zapamiętaj<input type="checkbox" name="zapamietaj"/>
             <input type="submit" value="Zaloguj"/>
         </form>
     </c:if>
-    <c:if test="${empty exception}">
+    <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
         <form action="LogoutServlet">
             <input type="submit" value="Wyloguj"/>
         </form>

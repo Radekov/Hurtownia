@@ -16,7 +16,7 @@
     <c:if test="${not empty exception}">
         <%--POWRÓT--%>
     </c:if>
-    <c:if test="${empty exception}">
+    <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
         <form action="showAllShops">
             Pokazanie wszystkich:<input type="text" name="sklep" title="By pokazać wszystke zostaw puste"/>
             <input type="submit" value="Pokaż wsio"/>

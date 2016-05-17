@@ -12,11 +12,12 @@
         <title>Administratorzy</title>
     </head>
     <body>
+        <a href="index.jsp">O</a>
     <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
     <c:if test="${not empty exception}">
         <%--POWRÓT--%>
     </c:if>
-    <c:if test="${empty exception}">
+    <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
         <form action="showAllUsers">
             Pokazanie wszystkich:<input type="text" name="login" title="By pokazać wszystkich zostaw puste"/>
             <input type="submit" value="Pokaż wsio"/>

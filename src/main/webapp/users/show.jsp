@@ -13,12 +13,12 @@
         <title>Administratorzy pokazator</title>
     </head>
     <body>
-        <a href="index.jsp">POWRÓT</a>
-    <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
+        <a href="index.jsp">INDEX</a>
+    <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
     <c:if test="${sessionScope.sign == null}">
         <%--POWRÓT--%>
     </c:if>
-    <c:if test="${sessionScope.sign == null}">
+   <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
         <table>
             <thead>
                 <tr>

@@ -118,24 +118,27 @@ public class filterUserActivity implements Filter {
         try {
             HttpServletRequest req = (HttpServletRequest) request;
                 HttpSession session = req.getSession(false);
-                Users user =(Users) session.getAttribute("user");
-                try{
+                //Users user =(Users) session.getAttribute("user");
+                //try{
+                    
                     /*
                     Hurtownia/"Dzienniki/"+user+".log",true
                     /\
                     ||
                     Jak dostać się
                     */
+                    /*
                     BufferedWriter bw =new BufferedWriter(new FileWriter("Dzienniki/"+user.getLogin()+".log",true));//user.getLogin()
                     DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date acctuall = Calendar.getInstance().getTime();
                     //req.getRequestURI()
                     bw.write(format.format(acctuall)+": "+req.getContextPath());
                     bw.close();
+                    
                 }
                 catch(IOException e){
                     
-                }
+                }*/
             chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,

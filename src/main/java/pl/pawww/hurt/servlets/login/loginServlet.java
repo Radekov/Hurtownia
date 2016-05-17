@@ -8,6 +8,7 @@ package pl.pawww.hurt.servlets.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,7 @@ public class loginServlet extends HttpServlet {
             throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        String zapamietaj = request.getParameter("zapamietaj");//jesli zaznaczone = "on"
         Users user = usersFacade.findAllByLogin(login).get(0);
         if (user == null || !user.getPassword().equals(password)) {
             response.sendRedirect("index.jsp");
@@ -51,6 +53,13 @@ public class loginServlet extends HttpServlet {
             cookie.setMaxAge(60 * 60);
             response.addCookie(cookie);
             cookie = new Cookie("password", user.getLogin());
+            cookie.setMaxAge(60 * 60);
+            response.addCookie(cookie);
+            
+            ServletContext ctx = request.getServletContext();
+            ctx.setInitParameter("zapamietaj", zapamietaj);
+            
+            cookie = new Cookie("zapamietaj", zapamietaj);
             cookie.setMaxAge(60 * 60);
             response.addCookie(cookie);
             request.getRequestDispatcher("index.jsp").forward(request, response);

@@ -7,6 +7,7 @@ package pl.pawww.hurt.jpa;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,7 +42,18 @@ public class OrdersProdut implements Serializable {
     @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID")
     @ManyToOne
     private Products idProduct;
+    @Column(name = "LICZBA_SZTUK")
+    private Integer liczbaSztuk;
 
+    public Integer getLiczbaSztuk() {
+        return liczbaSztuk;
+    }
+
+    public void setLiczbaSztuk(Integer liczbaSztuk) {
+        this.liczbaSztuk = liczbaSztuk;
+    }
+    
+    
     public OrdersProdut() {
     }
 

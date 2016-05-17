@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.pawww.hurt.jpa.Users;
 
@@ -110,14 +111,26 @@ public class filterCheckLogin implements Filter {
 
         Throwable problem = null;
         try {
+
             HttpServletRequest req = (HttpServletRequest) request;
-            HttpSession session = req.getSession();
-            Users user = (Users) session.getAttribute("user");
-            if(user != null && !Login_Servlet_URI.equals(req.getRequestURI())){
-                RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+            HttpServletResponse res = (HttpServletResponse) response;
+            HttpSession session = req.getSession(false);
+            //Users user = (Users) session.getAttribute("user");
+            /*if(user != null && !Login_Servlet_URI.equals(req.getRequestURI())){
+                RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
                 return;
+            }*/
+            /*  
+            boolean loggedIn = session != null && user != null;
+            String loginURI = req.getContextPath() + "/index.jsp";
+            boolean loginRequest = req.getRequestURI().equals(loginURI);
+            if (loggedIn || loginRequest) {
+                chain.doFilter(request, response);
+            } else {
+              res.sendRedirect(loginURI);
             }
+            */
             chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
