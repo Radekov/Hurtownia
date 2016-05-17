@@ -37,7 +37,7 @@
                 </select>
                 Produkty:
                 <c:forEach var="produkt" items="${requestScope.produkty}">
-                    ${produkt.nazwa}<input type="checkbox" name="${produkt.nazwa}"/>
+                    ${produkt.nazwa}<input type="checkbox" name="produkt" value="${produkt.nazwa}"/>
                     Ilość:<input type="number" name="${produkt.nazwa}ilosc"/><%--AJAX pojawia się po kliknięciu checkboxa--%>
                 </c:forEach>
                 <input type="submit" value="Dodaj to"/>

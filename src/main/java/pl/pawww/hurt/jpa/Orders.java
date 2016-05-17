@@ -40,14 +40,25 @@ public class Orders implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    @Temporal(TemporalType.DATE)
-    private Date dateend;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateEnd;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateStart;
     @JoinColumn(name = "ID_SHOPS", referencedColumnName = "ID")
     @ManyToOne
     private Shops idShops;
     @OneToMany(mappedBy = "idOrder")
     private Collection<OrdersProdut> ordersProdutCollection;
 
+    public Date getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
+    }
+    
+    
     public Orders() {
     }
 
@@ -63,12 +74,12 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Date getDateend() {
-        return dateend;
+    public Date getDateEnd() {
+        return dateEnd;
     }
 
-    public void setDateend(Date dateend) {
-        this.dateend = dateend;
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public Shops getIdShops() {
@@ -107,7 +118,11 @@ public class Orders implements Serializable {
         }
         return true;
     }
-
+    
+    public void add(OrdersProdut ordersProdut){
+        ordersProdutCollection.add(ordersProdut);
+    }
+    
     @Override
     public String toString() {
         return "pl.pawww.hurt.jpa.Orders[ id=" + id + " ]";

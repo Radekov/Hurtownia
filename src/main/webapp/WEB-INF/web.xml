@@ -64,6 +64,10 @@
         <servlet-name>logoutServlet</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.login.logoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addOrder</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.addOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addUser</servlet-name>
         <url-pattern>/users/addUser</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addOrder</servlet-name>
+        <url-pattern>/addOrder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
