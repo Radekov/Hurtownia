@@ -12,7 +12,7 @@
         <title>Administratorzy</title>
     </head>
     <body>
-        <a href="index.jsp">O</a>
+        <a href="../../index.jsp">Główne</a>
     <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
     <c:if test="${not empty exception}">
         <%--POWRÓT--%>

@@ -41,12 +41,15 @@ public class sendProductsToOrders extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println(this.getClass().getName()+" teraz działa serwlet");
         List<Products> produkty = productsFacade.findAll();
         request.setAttribute("produkty", produkty);
         
         List<Shops> shops = shopsFacade.findAll();
         request.setAttribute("shops", shops);
+        System.out.println(this.getClass().getName()+" teraz końcczy serwlet");
         request.getRequestDispatcher("/restricted/orders/index.jsp").forward(request, response);
     }
 

@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.pawww.hurt.servlets.products;
+package pl.pawww.hurt.servlets.orders;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pl.pawww.hurt.jpa.Products;
-import pl.pawww.hurt.jpa.ProductsFacade;
+import pl.pawww.hurt.jpa.Orders;
+import pl.pawww.hurt.jpa.OrdersFacade;
 
 /**
  *
  * @author r
  */
-public class addProduct extends HttpServlet {
-    
+public class showAllOrders extends HttpServlet {
     @EJB
-    ProductsFacade productsFacade;
+    OrdersFacade ordersFacade;
+          
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,19 +36,22 @@ public class addProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String nazwa = request.getParameter("nazwa");
-        String kategoria = request.getParameter("kategoria");
-        Integer ilosc = Integer.parseInt(request.getParameter("ilosc"));
-        BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
-        
-        Products product = new Products();
-        product.setNazwa(nazwa);
-        product.setKategoria(kategoria);
-        product.setLiczbaSztuk(ilosc);
-        product.setCena(cena);
-        
-        productsFacade.create(product);
-        response.sendRedirect("index.jsp");
+        String path = request.getServletPath();
+        path = path.substring(19, path.length());
+        List<Orders> orders = null;
+        switch (path) {
+            case "showAllOrders":
+                orders = ordersFacade.findAll();
+                break;
+            case "showAllOrdersUnrealized":
+                orders = ordersFacade.findByUnrealized();
+                break;
+            case "showAllOrdersRealized":
+                orders = ordersFacade.findByRealized();
+                break;
+        }
+        request.setAttribute("orders", orders);
+        request.getRequestDispatcher("/restricted/orders/show.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

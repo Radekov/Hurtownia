@@ -12,11 +12,12 @@
         <title>Zamówienia</title>
     </head>
     <body>
+        <a href="../../index.jsp">Główne</a>
         <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
         <c:if test="${not empty exception}">
             <%--POWRÓT--%>
         </c:if>
-        <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
+        <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
             <form action="showAllOrders">
                 <input type="submit" value="Pokaż wszystkie"/>
             </form>

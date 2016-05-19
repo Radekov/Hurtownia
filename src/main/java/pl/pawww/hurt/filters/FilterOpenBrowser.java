@@ -109,7 +109,7 @@ public class FilterOpenBrowser implements Filter {
         
         Throwable problem = null;
         try {
-            System.out.println(this.getClass().getName()+"teraz działa");
+            System.out.println(this.getClass().getName()+" teraz działa filter");
             HttpServletRequest req = (HttpServletRequest) request;
             HttpSession session = req.getSession(false);
             for(Cookie c:req.getCookies()){

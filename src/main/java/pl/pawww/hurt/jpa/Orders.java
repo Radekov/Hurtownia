@@ -6,6 +6,8 @@
 package pl.pawww.hurt.jpa;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -33,7 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id"),
-    @NamedQuery(name = "Orders.findByDateend", query = "SELECT o FROM Orders o WHERE o.dateEnd = :dateEnd")})
+    @NamedQuery(name = "Orders.findByRealized", query = "SELECT o FROM Orders o WHERE o.dateEnd IS NOT NULL"),
+    @NamedQuery(name = "Orders.findByUnrealized", query = "SELECT o FROM Orders o WHERE o.dateEnd IS NULL")
+})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;

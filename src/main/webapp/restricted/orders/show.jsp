@@ -5,7 +5,8 @@
 --%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="pl.pawww.hurt.jpa.Users" %>
+<%@page import="pl.pawww.hurt.jpa.Orders" %>
+<%@page import="pl.pawww.hurt.jpa.OrdersFacade" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,12 +14,9 @@
         <title>Zamówienia pokazator</title>
     </head>
     <body>
-        <a href="index.jsp">POWRÓT</a>
-        <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
-        <c:if test="${sessionScope.sign == null}">
-            <%--POWRÓT--%>
-        </c:if>
-        <c:if test="${sessionScope.sign == null}">
+        <a href="index.jsp">Główne</a>
+        <c:catch var="exception"><h1>${sessionScope.user.login}</h1></c:catch>
+        <c:if test="${sessionScope.user != null}">
             <table>
                 <thead>
                     <tr>
@@ -32,31 +30,53 @@
                 </thead>
                 <tbody>
                     <c:forEach var="order" items="${requestScope.orders}">
-                    <form action="realizujZamowienie">
+
                         <tr>
-                            <td><input type="number" value="${order.id}" name="id" readonly/></td>
+                            <td>${order.id}</td>
                             <td>${order.idShops.sklep}</td><%--Czy zadzaiała--%>
-                            <td><%--pętla dla produktów--%></td>
-                            <td>${order.dateStart}</td><><%--Czy wyświetli prawidłowo--%>
                             <td>
-                                <c:if test="${sessionScope.dateend != null}">
-                                    ${sessionScope.dateend}<%--Czy wyświetli prawidłowo--%>
-                                </c:if>
-                                <c:if test="${sessionScope.dateend == null}">
-                                    <input type="submit" value="Realizuj"/><%--Dać kolejne waruki czy z listy produktów są wszystkie dostępne--%>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td>Nazwa</td>
+                                            <td>Ilosc</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="product" items="${order.ordersProdutCollection}">
+                                            <tr>
+                                                <td>${product.idProduct.nazwa}</td>
+                                                <td>${product.liczbaSztuk}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>${order.dateStart}</td>
+                            <td>
+                                <c:if test="${order.dateEnd != null}">
+                                    ${order.dateEnd}
                                 </c:if>
                             </td>
-                            <td><c:if test="${sessionScope.dateend == null}">
+                            <td>
+                                <c:if test="${order.dateEnd == null}">
+                                    <form action="realizujZamowienie">
+                                        <input type="number" value="${order.id}" name="id" readonly hidden/>
+                                        <input type="submit" value="Realizuj"/><%--Dać kolejne waruki czy z listy produktów są wszystkie dostępne--%>
+                                    </form>
+                                </c:if>
+                            </td>
+                            <td><c:if test="${order.dateEnd == null}">
                                     <form action="modyfikujZamowienie">
-                                        <input type="submit" value="Modyfikuj"/><%--Lub jakoś inaczej obsłużyć modyfikację--%>
+                                        <input type="number" value="${order.id}" name="id" readonly hidden/>
+                                        <input type="submit" value="Modyfikuj"/><%--Lub jakoś inaczej obsłużyć modyfikację przez AJAX--%>
                                     </form>
                                 </c:if>
                             </td>
                         </tr>
-                    </form>
-                </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
-</body>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+    </body>
 </html>

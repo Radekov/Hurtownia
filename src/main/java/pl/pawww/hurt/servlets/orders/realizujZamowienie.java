@@ -3,16 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.pawww.hurt.servlets.products;
+package pl.pawww.hurt.servlets.orders;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import pl.pawww.hurt.jpa.Orders;
+import pl.pawww.hurt.jpa.OrdersFacade;
+import pl.pawww.hurt.jpa.OrdersProdut;
 import pl.pawww.hurt.jpa.Products;
 import pl.pawww.hurt.jpa.ProductsFacade;
 
@@ -20,10 +23,13 @@ import pl.pawww.hurt.jpa.ProductsFacade;
  *
  * @author r
  */
-public class addProduct extends HttpServlet {
-    
+public class realizujZamowienie extends HttpServlet {
+
+    @EJB
+    OrdersFacade ordersFacade;
     @EJB
     ProductsFacade productsFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,19 +42,26 @@ public class addProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String nazwa = request.getParameter("nazwa");
-        String kategoria = request.getParameter("kategoria");
-        Integer ilosc = Integer.parseInt(request.getParameter("ilosc"));
-        BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
-        
-        Products product = new Products();
-        product.setNazwa(nazwa);
-        product.setKategoria(kategoria);
-        product.setLiczbaSztuk(ilosc);
-        product.setCena(cena);
-        
-        productsFacade.create(product);
-        response.sendRedirect("index.jsp");
+        Integer id = Integer.parseInt((String) request.getParameter("id"));
+        System.out.println(id);
+        Orders order = ordersFacade.find(id);
+        boolean mozliwe_do_realizacji = true;
+        for (OrdersProdut op : order.getOrdersProdutCollection()) {
+            if (op.getLiczbaSztuk() > op.getIdProduct().getLiczbaSztuk()) {
+                mozliwe_do_realizacji = false;
+            }
+        }
+        if (mozliwe_do_realizacji) {
+            for (OrdersProdut op : order.getOrdersProdutCollection()) {
+                Products p = op.getIdProduct();
+                p.setLiczbaSztuk(p.getLiczbaSztuk() - op.getLiczbaSztuk());
+                productsFacade.edit(p);
+            }
+            order.setDateEnd(new Date());
+            ordersFacade.edit(order);
+            //WYKREOWAC CALY ORDER DO XMLa
+        }
+        request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

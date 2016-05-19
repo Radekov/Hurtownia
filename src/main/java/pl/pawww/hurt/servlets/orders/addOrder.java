@@ -7,6 +7,7 @@ package pl.pawww.hurt.servlets.orders;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,24 +55,16 @@ public class addOrder extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("BlaBla");
+        System.out.println(this.getClass().getName()+" ten serwlet teraz robi");
         Orders order = new Orders();
         //Ustawienie sklepu
         String sklep = request.getParameter("sklep");
-        Shops shop = shopsFacade.findAllBySklep("'" + sklep + "'").get(0);
+        Shops shop = shopsFacade.findAllBySklep(sklep).get(0);
         order.setIdShops(shop);
 
-        //Ustawienie daty
-        /*
-        SimpleDateFormat dateformat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");//sprawdzać po tym lub Date > Date
-        Date today = new Date();
-        String output = dateformat.format(today);
-        */
         order.setDateStart(new Date());
         ordersFacade.create(order);
-        
-        //Jeżeli po create samo ustawia id to dobrze
-        //Jeżeli nie to trzeba kombinować - pobrać ostatnio dodany
-        //bo ordersProdut.setIdOrder(order); !@#$%^&*
         
         //OrdersProdut ordersProdut;
         //Tworzenie listy zamówienia
@@ -81,18 +74,16 @@ public class addOrder extends HttpServlet {
         Integer[] ilosc = new Integer[produkty.length];
         for (int i = 0; i < produkty.length; i++) {
             ilosc[i] = Integer.parseInt(request.getParameter(produkty[i] + "ilosc"));
-            produkt = productsFacade.findAllByNazwa(produkty[0]).get(0);
+            produkt = productsFacade.findAllByNazwa(produkty[i]).get(0);
             OrdersProdut ordersProdut = new OrdersProdut();
             ordersProdut.setIdOrder(order);
             ordersProdut.setIdProduct(produkt);
             ordersProdut.setLiczbaSztuk(ilosc[i]);
             ordersProdutFacade.create(ordersProdut);
-            
-            //Problem podobny co do !@#$%^&*
-            //Czy jest sens dodawać skoro to w ordersProduct już jest powiązanie do tego
             order.add(ordersProdut);
         }
         ordersFacade.edit(order);
+        System.out.println(this.getClass().getName()+" ten serwlet teraz kończy");
         request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
     }
 

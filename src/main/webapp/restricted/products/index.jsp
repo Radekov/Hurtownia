@@ -12,21 +12,22 @@
         <title>Produkty</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>Zalogowany jako: ${sessionScope.user.login}</h1></c:catch>
-    <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
-        <form action="showAllProducts">
-            Pokazanie wszystkich:<input type="text" name="nazwa" title="By pokazać wszystke zostaw puste"/>
-            <input type="submit" value="Pokaż wsio"/>
-        </form>
-        <form action="addProduct">
-            Dodanie nowego produktu:
-            Nazwa:<input type="text" name="nazwa" >
-            Kategoria:<input type="text" name="kategoria"/>
-            Ilość:<input type="number" name="ilosc"/>
-            Cena:<input type="text" name="cena"/>
-            <input type="submit" value="Dodaj to"/>
-        </form>
-    </c:if>
+        <a href="../../index.jsp">Główne</a>
+        <c:catch var="exception"><h1>Zalogowany jako: ${sessionScope.user.login}</h1></c:catch>
+        <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
+            <form action="showAllProducts">
+                Pokazanie wszystkich:<input type="text" name="nazwa" title="By pokazać wszystke zostaw puste"/>
+                <input type="submit" value="Pokaż wsio"/>
+            </form>
+            <form action="addProduct">
+                Dodanie nowego produktu:
+                Nazwa:<input type="text" name="nazwa" >
+                Kategoria:<input type="text" name="kategoria"/>
+                Ilość:<input type="number" name="ilosc"/>
+                Cena:<input type="text" name="cena"/>
+                <input type="submit" value="Dodaj to"/>
+            </form>
+        </c:if>
 
-</body>
+    </body>
 </html>

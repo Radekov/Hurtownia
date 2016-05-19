@@ -78,6 +78,18 @@
         <servlet-name>index.jsp</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>sendProductsToOrders</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.sendProductsToOrders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>showAllOrders</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.showAllOrders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>realizujZamowienie</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.realizujZamowienie</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index.jsp</servlet-name>
         <url-pattern>/index.jsp</url-pattern>
@@ -111,16 +123,30 @@
         <url-pattern>/restricted/shops/showAllShops</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>addOrder</servlet-name>
-        <url-pattern>/restricted/addOrder</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addOrder</servlet-name>
+        <url-pattern>/restricted/orders/addOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendProductsToOrders</servlet-name>
+        <url-pattern>/restricted/orders/sendProductsToOrders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>showAllOrders</servlet-name>
+        <url-pattern>/restricted/orders/showAllOrders</url-pattern>
+        <url-pattern>/restricted/orders/showAllOrdersUnrealized</url-pattern>
+        <url-pattern>/restricted/orders/showAllOrdersRealized</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>realizujZamowienie</servlet-name>
+        <url-pattern>/restricted/orders/realizujZamowienie</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

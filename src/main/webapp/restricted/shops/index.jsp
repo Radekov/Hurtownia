@@ -12,22 +12,23 @@
         <title>Sklepy</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
-    <c:if test="${not empty exception}">
-        <%--POWRÓT--%>
-    </c:if>
-    <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
-        <form action="showAllShops">
-            Pokazanie wszystkich:<input type="text" name="sklep" title="By pokazać wszystke zostaw puste"/>
-            <input type="submit" value="Pokaż wsio"/>
-        </form>
-        <form action="addShop">
-            Dodanie nowego sklepu:
-            Sklep:<input type="text" name="sklep" >
-            Adres:<input type="text" name="adres"/>
-            <input type="submit" value="Dodaj to"/>
-        </form>
-    </c:if>
+        <a href="../../index.jsp">Główne</a>
+        <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
+        <c:if test="${not empty exception}">
+            <%--POWRÓT--%>
+        </c:if>
+        <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
+            <form action="showAllShops">
+                Pokazanie wszystkich:<input type="text" name="sklep" title="By pokazać wszystke zostaw puste"/>
+                <input type="submit" value="Pokaż wsio"/>
+            </form>
+            <form action="addShop">
+                Dodanie nowego sklepu:
+                Sklep:<input type="text" name="sklep" >
+                Adres:<input type="text" name="adres"/>
+                <input type="submit" value="Dodaj to"/>
+            </form>
+        </c:if>
 
-</body>
+    </body>
 </html>

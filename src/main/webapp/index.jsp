@@ -34,7 +34,7 @@
         <form action="restricted/shops/index.jsp">
             <input type="submit" value="Przeglądaj sklepy"/>
         </form>
-        <form action="sendProductsToOrders">
+        <form action="restricted/orders/sendProductsToOrders">
             <input type="submit" value="Przeglądaj zamówienia"/>
         </form>
     </c:if>
