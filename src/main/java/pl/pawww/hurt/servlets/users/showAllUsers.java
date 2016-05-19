@@ -38,15 +38,16 @@ public class showAllUsers extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String login = request.getParameter("login");
         List<Users> users;
-        if(login != null | login.equals("")){
+        if(login == null || login.equals("")){
             users =  usersFacade.findAll();
         }
         else{
-            login = "'%" + login + "%'";
+            login = "%" + login + "%";
+            System.out.println(login);
             users = usersFacade.findAllByLogin(login);
         }
         request.setAttribute("users", users);
-        request.getRequestDispatcher("/users/show.jsp").forward(request, response);
+        request.getRequestDispatcher("/restricted/users/show.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

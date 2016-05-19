@@ -43,25 +43,21 @@ public class loginServlet extends HttpServlet {
         String zapamietaj = request.getParameter("zapamietaj");//jesli zaznaczone = "on"
         Users user = usersFacade.findAllByLogin(login).get(0);
         if (user == null || !user.getPassword().equals(password)) {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("/Hurt/index.jsp");
         } else {
             HttpSession session = request.getSession(true);
             synchronized (session) {
                 session.setAttribute("user", user);
             }
-            Cookie cookie = new Cookie("login", user.getLogin());
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
-            cookie = new Cookie("password", user.getLogin());
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
-            
-            ServletContext ctx = request.getServletContext();
-            ctx.setInitParameter("zapamietaj", zapamietaj);
-            
-            cookie = new Cookie("zapamietaj", zapamietaj);
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
+            if (zapamietaj != null && zapamietaj.equals("on")) {
+                synchronized (session) {
+                    Cookie cookie = new Cookie("IdSesji", session.getId());
+                    cookie.setMaxAge(60 * 60);
+                    response.addCookie(cookie);
+                    //session.setMaxInactiveInterval(0);
+                }
+            }
+            System.out.println(session.getId());
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }

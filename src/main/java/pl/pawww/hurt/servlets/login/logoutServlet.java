@@ -36,12 +36,11 @@ public class logoutServlet extends HttpServlet {
             c.setMaxAge(0);
         }
         HttpSession session = request.getSession(false);
-        /*
-        if (session != null) {
-            session.invalidate();
-        }*/
         synchronized(session){
             session.removeAttribute("user");
+        }
+        if (session != null) {
+            session.invalidate();
         }
         //response.sendRedirect("index.jsp");
         request.getRequestDispatcher("index.jsp").forward(request, response);

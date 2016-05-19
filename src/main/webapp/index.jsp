@@ -12,8 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
-    <c:if test="${sessionScope.sign == null}">
+    <c:catch var="exception"><h1>Hello ${sessionScope.user.login}</h1></c:catch>
+    <c:if test="${sessionScope.user == null}">
         <form action="loginServlet" method="POST">
             Login:<input type="text" name="login"/>
             Hasło:<input type="password" name="password"/>
@@ -21,17 +21,17 @@
             <input type="submit" value="Zaloguj"/>
         </form>
     </c:if>
-    <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
-        <form action="LogoutServlet">
+    <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
+        <form action="logoutServlet">
             <input type="submit" value="Wyloguj"/>
         </form>
-        <form action="products/index.jsp">
+        <form action="restricted/products/index.jsp">
             <input type="submit" value="Przejrzyj rzeczy"/>
         </form>
-        <form action="users/index.jsp">
+        <form action="restricted/users/index.jsp">
             <input type="submit" value="Przeglądaj użytkowników"/>
         </form>
-        <form action="shops/index.jsp">
+        <form action="restricted/shops/index.jsp">
             <input type="submit" value="Przeglądaj sklepy"/>
         </form>
         <form action="sendProductsToOrders">

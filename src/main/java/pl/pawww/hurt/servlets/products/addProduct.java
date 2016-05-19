@@ -49,7 +49,7 @@ public class addProduct extends HttpServlet {
         
         productsFacade.create(product);
         
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("/restricted/products/index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -12,11 +12,8 @@
         <title>Produkty</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
-    <c:if test="${not empty exception}">
-        <%--POWRÓT--%>
-    </c:if>
-    <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
+    <c:catch var="exception"><h1>Zalogowany jako: ${sessionScope.user.login}</h1></c:catch>
+    <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
         <form action="showAllProducts">
             Pokazanie wszystkich:<input type="text" name="nazwa" title="By pokazać wszystke zostaw puste"/>
             <input type="submit" value="Pokaż wsio"/>

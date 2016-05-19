@@ -116,6 +116,7 @@ public class filterUserActivity implements Filter {
         
         Throwable problem = null;
         try {
+            System.out.println(this.getClass().getName()+" teraz działa");
             HttpServletRequest req = (HttpServletRequest) request;
                 HttpSession session = req.getSession(false);
                 //Users user =(Users) session.getAttribute("user");

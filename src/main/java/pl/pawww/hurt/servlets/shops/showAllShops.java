@@ -38,15 +38,15 @@ public class showAllShops extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String sklep = request.getParameter("sklep");
         List<Shops> shops;
-        if(sklep != null | sklep.equals("")){
+        if(sklep == null || sklep.equals("")){
             shops =  shopsFacade.findAll();
         }
         else{
-            sklep = "'%" + sklep + "%'";
+            sklep = "%" + sklep + "%";
             shops = shopsFacade.findAllBySklep(sklep);
         }
         request.setAttribute("shops", shops);
-        request.getRequestDispatcher("/shops/show.jsp").forward(request, response);
+        request.getRequestDispatcher("/restricted/shops/show.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

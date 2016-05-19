@@ -93,7 +93,7 @@ public class addOrder extends HttpServlet {
             order.add(ordersProdut);
         }
         ordersFacade.edit(order);
-
+        request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -38,16 +38,16 @@ public class showAllProducts extends HttpServlet {
         System.out.println("Jestem w"+showAllProducts.class.getName()+"---------------------------------------------------");
         String nazwa = request.getParameter("nazwa");
         List<Products> products;
-        if(nazwa != null | nazwa.equals("")){
+        if(nazwa == null || nazwa.equals("")){
             products =  productsFacade.findAll();
         }
         else{
-            nazwa = "'%" + nazwa + "%'";
+            nazwa = "%" + nazwa + "%";
             products = productsFacade.findAllByNazwa(nazwa);
         }
         request.setAttribute("products", products);
         System.out.println("Wychodze z:"+showAllProducts.class.getName()+"---------------------------------------------------");
-        request.getRequestDispatcher("/products/show.jsp").forward(request, response);
+        request.getRequestDispatcher("/restricted/products/show.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id"),
-    @NamedQuery(name = "Orders.findByDateend", query = "SELECT o FROM Orders o WHERE o.dateend = :dateend")})
+    @NamedQuery(name = "Orders.findByDateend", query = "SELECT o FROM Orders o WHERE o.dateEnd = :dateEnd")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,8 +41,10 @@ public class Orders implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
+    @Column(name = "date_end")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnd;
+    @Column(name = "date_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateStart;
     @JoinColumn(name = "ID_SHOPS", referencedColumnName = "ID")

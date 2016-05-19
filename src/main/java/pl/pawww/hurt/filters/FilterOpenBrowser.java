@@ -12,36 +12,33 @@ import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import pl.pawww.hurt.jpa.Users;
 
 /**
  *
  * @author r
  */
-public class filterCheckLogin implements Filter {
-
+public class FilterOpenBrowser implements Filter {
+    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-
-    public filterCheckLogin() {
-    }
-
+    
+    public FilterOpenBrowser() {
+    }    
+    
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("filterCheckLogin:DoBeforeProcessing");
+            log("FilterOpenBrowser:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -64,12 +61,12 @@ public class filterCheckLogin implements Filter {
 	    log(buf.toString());
 	}
          */
-    }
-
+    }    
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("filterCheckLogin:DoAfterProcessing");
+            log("FilterOpenBrowser:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -103,32 +100,25 @@ public class filterCheckLogin implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-
+        
         if (debug) {
-            log("filterCheckLogin:doFilter()");
+            log("FilterOpenBrowser:doFilter()");
         }
-
+        
         doBeforeProcessing(request, response);
-
+        
         Throwable problem = null;
         try {
-            System.out.println(this.getClass().getName()+" teraz działa");
+            System.out.println(this.getClass().getName()+"teraz działa");
             HttpServletRequest req = (HttpServletRequest) request;
-            HttpServletResponse res = (HttpServletResponse) response;
             HttpSession session = req.getSession(false);
-            Users user = null;
-             if(session != null){
-              user = (Users) session.getAttribute("user");
-              if(user != null)
-                chain.doFilter(request, response);
-             }  
-            else {
-                 System.out.println("Filtr przechodzi do");
-              res.sendRedirect("/Hurt/index.jsp");
-              return;
+            for(Cookie c:req.getCookies()){
+                if(c.equals("IdSesji") && session != null){
+                    System.out.println(c.getValue().equals(problem));
+                }
             }
-            
-            //chain.doFilter(request, response);
+            System.out.println(session.getId());
+            chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
@@ -136,7 +126,7 @@ public class filterCheckLogin implements Filter {
             problem = t;
             t.printStackTrace();
         }
-
+        
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -171,21 +161,19 @@ public class filterCheckLogin implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {
+    public void destroy() {        
     }
-    private String Login_Servlet_URI;
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {
+    public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {
-                log("filterCheckLogin:Initializing filter");
+            if (debug) {                
+                log("FilterOpenBrowser:Initializing filter");
             }
         }
-        Login_Servlet_URI = filterConfig.getInitParameter("loginURI");
     }
 
     /**
@@ -194,27 +182,27 @@ public class filterCheckLogin implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("filterCheckLogin()");
+            return ("FilterOpenBrowser()");
         }
-        StringBuffer sb = new StringBuffer("filterCheckLogin(");
+        StringBuffer sb = new StringBuffer("FilterOpenBrowser(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
-
+    
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);
-
+        String stackTrace = getStackTrace(t);        
+        
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);
+                PrintWriter pw = new PrintWriter(ps);                
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
-                pw.print(stackTrace);
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
+                pw.print(stackTrace);                
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -231,7 +219,7 @@ public class filterCheckLogin implements Filter {
             }
         }
     }
-
+    
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -245,9 +233,9 @@ public class filterCheckLogin implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);
+        filterConfig.getServletContext().log(msg);        
     }
-
+    
 }

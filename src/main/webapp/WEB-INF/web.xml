@@ -16,18 +16,24 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
+    <filter>
+        <filter-name>FilterOpenBrowser</filter-name>
+        <filter-class>pl.pawww.hurt.filters.FilterOpenBrowser</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterOpenBrowser</filter-name>
+        <url-pattern>/Hurt/index.jsp</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>filterCheckLogin</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/*/restricted/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>filterUserActivity</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/*/restricted/*</url-pattern>
     </filter-mapping>
-    <listener>
-        <description>ServletContextListener</description>
-        <listener-class>pl.pawww.hurt.listeners.ContextListenerAplikacji</listener-class>
-    </listener>
     <servlet>
         <servlet-name>addUser</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.users.addUser</servlet-class>
@@ -68,33 +74,45 @@
         <servlet-name>addOrder</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.orders.addOrder</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>index.jsp</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>index.jsp</servlet-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addUser</servlet-name>
-        <url-pattern>/users/addUser</url-pattern>
+        <url-pattern>/restricted/users/addUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>showAllUsers</servlet-name>
-        <url-pattern>/users/showAllUsers</url-pattern>
+        <url-pattern>/restricted/users/showAllUsers</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addProduct</servlet-name>
-        <url-pattern>/products/addProduct</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>modyfikujProdukt</servlet-name>
-        <url-pattern>/products/modyfikujProdukt</url-pattern>
+        <url-pattern>/restricted/products/addProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>showAllProducts</servlet-name>
-        <url-pattern>/products/showAllProducts</url-pattern>
+        <url-pattern>/restricted/products/showAllProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modyfikujProdukt</servlet-name>
+        <url-pattern>/restricted/products/modyfikujProdukt</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addShop</servlet-name>
-        <url-pattern>/shops/addShop</url-pattern>
+        <url-pattern>/restricted/shops/addShop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>showAllShops</servlet-name>
-        <url-pattern>/shops/showAllShops</url-pattern>
+        <url-pattern>/restricted/shops/showAllShops</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addOrder</servlet-name>
+        <url-pattern>/restricted/addOrder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
@@ -103,10 +121,6 @@
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logoutServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>addOrder</servlet-name>
-        <url-pattern>/addOrder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
