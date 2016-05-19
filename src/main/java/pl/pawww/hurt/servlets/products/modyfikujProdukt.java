@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,11 @@ public class modyfikujProdukt extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("Jestem w"+showAllProducts.class.getName()+"---------------------------------------------------");
+        System.out.println("Jestem w:"+showAllProducts.class.getName());
+        ServletContext sc = request.getServletContext();
+        if((boolean)sc.getAttribute("edytProduct")==true)
+            response.sendRedirect("index.jsp");
+        sc.setAttribute("edytProduct", true);
         Integer id = Integer.parseInt(request.getParameter("id"));
         Integer liczbaSztuk = Integer.parseInt(request.getParameter("liczbaSztuk"));
         BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
@@ -44,7 +49,8 @@ public class modyfikujProdukt extends HttpServlet {
         product.setLiczbaSztuk(liczbaSztuk);
         product.setCena(cena);
         productsFacade.edit(product);
-        System.out.println("Wychodze z:"+showAllProducts.class.getName()+"---------------------------------------------------");
+        sc.setAttribute("edytOrder", false);
+        System.out.println("Wychodze z:"+showAllProducts.class.getName());
         response.sendRedirect("index.jsp");
     }
 

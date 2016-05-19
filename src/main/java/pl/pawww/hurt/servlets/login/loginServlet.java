@@ -19,7 +19,7 @@ import pl.pawww.hurt.jpa.Users;
 import pl.pawww.hurt.jpa.UsersFacade;
 
 /**
- *
+ * 
  * @author r
  */
 public class loginServlet extends HttpServlet {

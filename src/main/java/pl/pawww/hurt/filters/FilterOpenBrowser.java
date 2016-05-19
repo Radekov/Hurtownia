@@ -20,7 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Uruchamia się tylko dla głównego zasobu /root/index.jsp przy uruchomieniu przeglądarki.
+ * Ma za zadanie sprawdzić, czy użytkownik przy poprzednim logowaniu zaznaczył 'zapamiętaj'
+ * Jeśli tak, to loguje użytkownika automatycznie i przekierowuje na stronę gdzie ostatnio zamknął przeglądarkę
+ * Jeśli nie, to poprostu otwiera główny zasób, a tam jest formularz do logowania.
  * @author r
  */
 public class FilterOpenBrowser implements Filter {

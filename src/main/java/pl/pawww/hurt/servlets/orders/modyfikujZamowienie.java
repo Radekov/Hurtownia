@@ -7,42 +7,17 @@ package pl.pawww.hurt.servlets.orders;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pl.pawww.hurt.jpa.Orders;
-import pl.pawww.hurt.jpa.OrdersFacade;
-import pl.pawww.hurt.jpa.OrdersProdut;
-import pl.pawww.hurt.jpa.OrdersProdutFacade;
-import pl.pawww.hurt.jpa.Products;
-import pl.pawww.hurt.jpa.ProductsFacade;
-import pl.pawww.hurt.jpa.Shops;
-import pl.pawww.hurt.jpa.ShopsFacade;
 
 /**
  *
  * @author r
  */
-public class addOrder extends HttpServlet {
-
-    @EJB
-    OrdersFacade ordersFacade;
-    @EJB
-    ProductsFacade productsFacade;
-    @EJB
-    ShopsFacade shopsFacade;
-    @EJB
-    OrdersProdutFacade ordersProdutFacade;
+public class modyfikujZamowienie extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,41 +31,13 @@ public class addOrder extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         ServletContext sc = request.getServletContext();
-        if((boolean)sc.getAttribute("edytOrder")==true)
+        if ((boolean) sc.getAttribute("edytOrder") == true) {
             request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
-        sc.setAttribute("edytOrder", true);
-        System.out.println(this.getClass().getName()+" ten serwlet teraz robi");
-        Orders order = new Orders();
-        //Ustawienie sklepu
-        String sklep = request.getParameter("sklep");
-        Shops shop = shopsFacade.findAllBySklep(sklep).get(0);
-        order.setIdShops(shop);
-
-        order.setDateStart(new Date());
-        ordersFacade.create(order);
-        
-        //OrdersProdut ordersProdut;
-        //Tworzenie listy zamówienia
-        Products produkt;
-        List<Products> p;
-        String[] produkty = request.getParameterValues("produkt");
-        Integer[] ilosc = new Integer[produkty.length];
-        for (int i = 0; i < produkty.length; i++) {
-            ilosc[i] = Integer.parseInt(request.getParameter(produkty[i] + "ilosc"));
-            produkt = productsFacade.findAllByNazwa(produkty[i]).get(0);
-            OrdersProdut ordersProdut = new OrdersProdut();
-            ordersProdut.setIdOrder(order);
-            ordersProdut.setIdProduct(produkt);
-            ordersProdut.setLiczbaSztuk(ilosc[i]);
-            ordersProdutFacade.create(ordersProdut);
-            order.add(ordersProdut);
         }
-        ordersFacade.edit(order);
-        System.out.println(this.getClass().getName()+" ten serwlet teraz kończy");
+        sc.setAttribute("edytOrder", true);
+
         sc.setAttribute("edytOrder", false);
-        request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

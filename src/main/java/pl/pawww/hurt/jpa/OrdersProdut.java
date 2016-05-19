@@ -20,7 +20,14 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Tabela OrderdsProducts
+ * Pośredniczy pomiędzy Orders, a Products
+ * Orders<==>Products
+ * Orders1==>OrdersProdut<==1Products
+ * @param id
+ * @param idOrder
+ * @param idProduct
+ * @param liczbaSztuk liczba sztuk produktu, które zażądało zamówienie
  * @author r
  */
 @Entity
@@ -48,7 +55,7 @@ public class OrdersProdut implements Serializable {
     public Integer getLiczbaSztuk() {
         return liczbaSztuk;
     }
-
+    
     public void setLiczbaSztuk(Integer liczbaSztuk) {
         this.liczbaSztuk = liczbaSztuk;
     }

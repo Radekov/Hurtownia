@@ -23,7 +23,9 @@ import javax.servlet.http.HttpSession;
 import pl.pawww.hurt.jpa.Users;
 
 /**
- *
+ * Uruchmia się przy zasobach z /root/restricted/*
+ * Ma za zadanie sprawdzić, czy w sesji jest zalogowany użytkownik, jeśli nie jest,
+ * to przekierowuje na stronę główną, a tam jest formularz do logowania
  * @author r
  */
 public class filterCheckLogin implements Filter {

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import pl.pawww.hurt.jpa.Users;
 
 /**
- *
+ * Zapisuje aktywność użytkownika
  * @author r
  */
 public class filterUserActivity implements Filter {

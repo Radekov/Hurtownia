@@ -23,7 +23,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Tabela Products(produkty)
+ * @param id
+ * @param cena
+ * @param liczbaSztuk całkowita ilość produktu
+ * @param kategoria oczywistym jest, że powinno być idKategoria, a kategorie powinny być w oddzielnej tabeli
+ * @param nazwa
+ * @param ordersProdutCollection id do którego zamówienia przedmiot ma iść
  * @author r
  */
 @Entity

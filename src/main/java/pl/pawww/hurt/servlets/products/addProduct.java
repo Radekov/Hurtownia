@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,18 +37,21 @@ public class addProduct extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        ServletContext sc = request.getServletContext();
+        if((boolean)sc.getAttribute("edytProduct")==true)
+            response.sendRedirect("index.jsp");
+        sc.setAttribute("edytProduct", true);
         String nazwa = request.getParameter("nazwa");
         String kategoria = request.getParameter("kategoria");
         Integer ilosc = Integer.parseInt(request.getParameter("ilosc"));
         BigDecimal cena = BigDecimal.valueOf(Double.parseDouble(request.getParameter("cena")));
-        
         Products product = new Products();
         product.setNazwa(nazwa);
         product.setKategoria(kategoria);
         product.setLiczbaSztuk(ilosc);
         product.setCena(cena);
-        
         productsFacade.create(product);
+        sc.setAttribute("edytProduct", false);
         response.sendRedirect("index.jsp");
     }
 

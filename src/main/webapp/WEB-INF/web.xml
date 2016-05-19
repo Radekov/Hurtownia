@@ -34,6 +34,10 @@
         <filter-name>filterUserActivity</filter-name>
         <url-pattern>/*/restricted/*</url-pattern>
     </filter-mapping>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>pl.pawww.hurt.listeners.ContextListenerEdycji</listener-class>
+    </listener>
     <servlet>
         <servlet-name>addUser</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.users.addUser</servlet-class>
@@ -89,6 +93,10 @@
     <servlet>
         <servlet-name>realizujZamowienie</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.orders.realizujZamowienie</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>modyfikujZamowienie</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.modyfikujZamowienie</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>index.jsp</servlet-name>
@@ -147,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>realizujZamowienie</servlet-name>
         <url-pattern>/restricted/orders/realizujZamowienie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modyfikujZamowienie</servlet-name>
+        <url-pattern>/restricted/orders/modyfikujZamowienie</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

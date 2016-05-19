@@ -20,7 +20,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Tabel Shops(sklepy)
+ * @param id (powienien być NIP, lecz id jest krótsze)
+ * @param sklep nazwa sklepu
+ * @param adres adres sklepu
+ * Powinno być więcej informacji o sklepie lecz w logice bazy nie są one istotne
  * @author r
  */
 @Entity

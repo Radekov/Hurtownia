@@ -17,7 +17,11 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * Tabela Users - informacje o administratorach
+ * Hasła nie są szyfrowane
+ * @param id
+ * @param login login administratora
+ * @param password hasło administratora
  * @author r
  */
 @Entity

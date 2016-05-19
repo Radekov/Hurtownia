@@ -23,11 +23,19 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
+ * Tabela Orders(zamówienia)
+ * @param id
+ * @param dateEnd data zrealizowania zamówienia
+ * @param dateStart data złożenia zamówienia
+ * @param idShops
+ * @param ordersProdutCollection spis wszystkich zamówionych produktów
+ * @
  * @author r
  */
 @Entity
@@ -56,7 +64,7 @@ public class Orders implements Serializable {
     private Shops idShops;
     @OneToMany(mappedBy = "idOrder")
     private Collection<OrdersProdut> ordersProdutCollection;
-
+    @XmlAttribute
     public Date getDateStart() {
         return dateStart;
     }
@@ -72,7 +80,7 @@ public class Orders implements Serializable {
     public Orders(Integer id) {
         this.id = id;
     }
-
+    @XmlAttribute
     public Integer getId() {
         return id;
     }
@@ -80,7 +88,7 @@ public class Orders implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @XmlAttribute
     public Date getDateEnd() {
         return dateEnd;
     }
@@ -88,7 +96,7 @@ public class Orders implements Serializable {
     public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }
-
+    
     public Shops getIdShops() {
         return idShops;
     }
@@ -97,7 +105,8 @@ public class Orders implements Serializable {
         this.idShops = idShops;
     }
 
-    @XmlTransient
+    //@XmlTransient
+    @XmlElementWrapper(name="produkty")
     public Collection<OrdersProdut> getOrdersProdutCollection() {
         return ordersProdutCollection;
     }
