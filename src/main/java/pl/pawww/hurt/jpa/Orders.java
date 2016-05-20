@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.pawww.hurt.jpa;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -64,7 +57,7 @@ public class Orders implements Serializable {
     private Shops idShops;
     @OneToMany(mappedBy = "idOrder")
     private Collection<OrdersProdut> ordersProdutCollection;
-    @XmlAttribute
+
     public Date getDateStart() {
         return dateStart;
     }
@@ -88,7 +81,6 @@ public class Orders implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    @XmlAttribute
     public Date getDateEnd() {
         return dateEnd;
     }
@@ -97,6 +89,7 @@ public class Orders implements Serializable {
         this.dateEnd = dateEnd;
     }
     
+    //@XmlTransient
     public Shops getIdShops() {
         return idShops;
     }

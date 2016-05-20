@@ -5,14 +5,20 @@
  */
 package pl.pawww.hurt.servlets.orders;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import pl.pawww.hurt.jpa.Orders;
 import pl.pawww.hurt.jpa.OrdersFacade;
 import pl.pawww.hurt.jpa.OrdersProdut;
@@ -60,6 +66,17 @@ public class realizujZamowienie extends HttpServlet {
             order.setDateEnd(new Date());
             ordersFacade.edit(order);
             //WYKREOWAC CALY ORDER DO XMLa
+            JAXBContext jaxbc;
+            Marshaller m;
+            try {
+                jaxbc = JAXBContext.newInstance(Orders.class);
+                m = jaxbc.createMarshaller();
+                m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+                m.marshal(order, new File("/home/r/Pulpit/Zamówienie_"+order.getId()+".xml"));//handler plik
+            } catch (JAXBException ex) {
+                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
         request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
     }

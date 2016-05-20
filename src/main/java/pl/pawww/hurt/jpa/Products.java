@@ -19,15 +19,18 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Tabela Products(produkty)
+ *
  * @param id
  * @param cena
  * @param liczbaSztuk całkowita ilość produktu
- * @param kategoria oczywistym jest, że powinno być idKategoria, a kategorie powinny być w oddzielnej tabeli
+ * @param kategoria oczywistym jest, że powinno być idKategoria, a kategorie
+ * powinny być w oddzielnej tabeli
  * @param nazwa
  * @param ordersProdutCollection id do którego zamówienia przedmiot ma iść
  * @author r
@@ -65,12 +68,17 @@ public class Products implements Serializable {
         this.id = id;
     }
 
+    @XmlAttribute
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNazwa() {
+        return nazwa;
     }
 
     public BigDecimal getCena() {
@@ -81,6 +89,7 @@ public class Products implements Serializable {
         this.cena = cena;
     }
 
+    @XmlAttribute
     public String getKategoria() {
         return kategoria;
     }
@@ -89,16 +98,13 @@ public class Products implements Serializable {
         this.kategoria = kategoria;
     }
 
+    @XmlTransient
     public Integer getLiczbaSztuk() {
         return liczbaSztuk;
     }
 
     public void setLiczbaSztuk(Integer liczbaSztuk) {
         this.liczbaSztuk = liczbaSztuk;
-    }
-
-    public String getNazwa() {
-        return nazwa;
     }
 
     public void setNazwa(String nazwa) {
@@ -138,5 +144,5 @@ public class Products implements Serializable {
     public String toString() {
         return "pl.pawww.hurt.jpa.Products[ id=" + id + " ]";
     }
-    
+
 }

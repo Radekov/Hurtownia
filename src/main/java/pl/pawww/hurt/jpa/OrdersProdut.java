@@ -17,7 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Tabela OrderdsProducts
@@ -67,7 +69,7 @@ public class OrdersProdut implements Serializable {
     public OrdersProdut(Integer id) {
         this.id = id;
     }
-
+    @XmlAttribute
     public Integer getId() {
         return id;
     }
@@ -75,7 +77,7 @@ public class OrdersProdut implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @XmlTransient
     public Orders getIdOrder() {
         return idOrder;
     }

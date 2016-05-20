@@ -46,8 +46,11 @@
                                         <c:forEach var="product" items="${order.ordersProdutCollection}">
                                             <tr>
                                                 <td>${product.idProduct.nazwa}</td>
-                                                <td>${product.liczbaSztuk}</td>
-                                            </tr>
+                                                <td>
+                                                    ${product.liczbaSztuk}
+                                                    <c:if test="${order.dateEnd == null}">/${product.idProduct.liczbaSztuk}</c:if>
+                                                    </td>
+                                                </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>

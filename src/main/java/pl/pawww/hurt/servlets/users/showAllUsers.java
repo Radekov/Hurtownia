@@ -47,7 +47,7 @@ public class showAllUsers extends HttpServlet {
             users = usersFacade.findAllByLogin(login);
         }
         request.setAttribute("users", users);
-        request.getRequestDispatcher("/restricted/orders/show.jsp").forward(request, response);
+        request.getRequestDispatcher("/restricted/users/show.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

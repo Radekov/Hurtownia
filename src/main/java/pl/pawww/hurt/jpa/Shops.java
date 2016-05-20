@@ -16,15 +16,17 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Tabel Shops(sklepy)
+ *
  * @param id (powienien być NIP, lecz id jest krótsze)
  * @param sklep nazwa sklepu
- * @param adres adres sklepu
- * Powinno być więcej informacji o sklepie lecz w logice bazy nie są one istotne
+ * @param adres adres sklepu Powinno być więcej informacji o sklepie lecz w
+ * logice bazy nie są one istotne
  * @author r
  */
 @Entity
@@ -55,6 +57,7 @@ public class Shops implements Serializable {
         this.id = id;
     }
 
+    @XmlAttribute
     public Integer getId() {
         return id;
     }
@@ -63,16 +66,16 @@ public class Shops implements Serializable {
         this.id = id;
     }
 
+    public String getSklep() {
+        return sklep;
+    }
+
     public String getAdres() {
         return adres;
     }
 
     public void setAdres(String adres) {
         this.adres = adres;
-    }
-
-    public String getSklep() {
-        return sklep;
     }
 
     public void setSklep(String sklep) {
@@ -112,5 +115,5 @@ public class Shops implements Serializable {
     public String toString() {
         return "pl.pawww.hurt.jpa.Shops[ id=" + id + " ]";
     }
-    
+
 }
