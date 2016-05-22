@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -61,7 +62,7 @@ public class Orders implements Serializable {
     public Date getDateStart() {
         return dateStart;
     }
-
+    @XmlElement
     public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
@@ -77,14 +78,14 @@ public class Orders implements Serializable {
     public Integer getId() {
         return id;
     }
-
+    
     public void setId(Integer id) {
         this.id = id;
     }
     public Date getDateEnd() {
         return dateEnd;
     }
-
+    @XmlElement
     public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }

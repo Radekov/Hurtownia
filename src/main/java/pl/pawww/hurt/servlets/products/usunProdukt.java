@@ -3,39 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.pawww.hurt.servlets.orders;
+package pl.pawww.hurt.servlets.products;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import pl.pawww.hurt.jpa.Orders;
-import pl.pawww.hurt.jpa.OrdersFacade;
-import pl.pawww.hurt.jpa.OrdersProdut;
-import pl.pawww.hurt.jpa.Products;
 import pl.pawww.hurt.jpa.ProductsFacade;
 
 /**
  *
  * @author r
  */
-public class realizujZamowienie extends HttpServlet {
-
-    @EJB
-    OrdersFacade ordersFacade;
+public class usunProdukt extends HttpServlet {
     @EJB
     ProductsFacade productsFacade;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,43 +33,9 @@ public class realizujZamowienie extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Integer id = Integer.parseInt((String) request.getParameter("id"));
-        System.out.println(id);
-        Orders order = ordersFacade.find(id);
-        boolean mozliwe_do_realizacji = true;
-        for (OrdersProdut op : order.getOrdersProdutCollection()) {
-            if (op.getLiczbaSztuk() > op.getIdProduct().getLiczbaSztuk()) {
-                mozliwe_do_realizacji = false;
-            }
-        }
-        if (mozliwe_do_realizacji) {
-            for (OrdersProdut op : order.getOrdersProdutCollection()) {
-                Products p = op.getIdProduct();
-                p.setLiczbaSztuk(p.getLiczbaSztuk() - op.getLiczbaSztuk());
-                productsFacade.edit(p);
-            }
-            order.setDateEnd(new Date());
-            ordersFacade.edit(order);
-            try {
-                //WYKREOWAC CALY ORDER DO XMLa
-                /*
-                JAXBContext jaxbc;
-                Marshaller m;
-                try {
-                jaxbc = JAXBContext.newInstance(Orders.class);
-                m = jaxbc.createMarshaller();
-                m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                m.marshal(order, new File("/home/r/Pulpit/Zamówienie_"+order.getId()+".xml"));//handler plik
-                } catch (JAXBException ex) {
-                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
-                doXML.zrobXML(order);
-            } catch (JAXBException ex) {
-                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        productsFacade.remove(productsFacade.find(id));
+        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

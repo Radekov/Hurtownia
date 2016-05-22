@@ -26,6 +26,7 @@
                         <td>Data zamówienia</td>
                         <td>Data realizacji</td>
                         <td></td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,6 +74,13 @@
                                     <form action="modyfikujZamowienie">
                                         <input type="number" value="${order.id}" name="id" readonly hidden/>
                                         <input type="submit" value="Modyfikuj"/><%--Lub jakoś inaczej obsłużyć modyfikację przez AJAX--%>
+                                    </form>
+                                </c:if>
+                            </td>
+                            <td><c:if test="${order.dateEnd != null}">
+                                    <form action="zrobOrderXML">
+                                        <input type="number" value="${order.id}" name="id" readonly hidden/>
+                                        <input type="submit" value="Spraw plik XML"/>
                                     </form>
                                 </c:if>
                             </td>

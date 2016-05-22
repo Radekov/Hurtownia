@@ -3,38 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.pawww.hurt.servlets.orders;
+package pl.pawww.hurt.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import pl.pawww.hurt.jpa.Orders;
-import pl.pawww.hurt.jpa.OrdersFacade;
-import pl.pawww.hurt.jpa.OrdersProdut;
-import pl.pawww.hurt.jpa.Products;
-import pl.pawww.hurt.jpa.ProductsFacade;
+import javax.servlet.http.Part;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.annotation.MultipartConfig;
+import javax.xml.XMLConstants;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author r
  */
-public class realizujZamowienie extends HttpServlet {
-
-    @EJB
-    OrdersFacade ordersFacade;
-    @EJB
-    ProductsFacade productsFacade;
+@MultipartConfig
+public class validateXML extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,43 +49,26 @@ public class realizujZamowienie extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Integer id = Integer.parseInt((String) request.getParameter("id"));
-        System.out.println(id);
-        Orders order = ordersFacade.find(id);
-        boolean mozliwe_do_realizacji = true;
-        for (OrdersProdut op : order.getOrdersProdutCollection()) {
-            if (op.getLiczbaSztuk() > op.getIdProduct().getLiczbaSztuk()) {
-                mozliwe_do_realizacji = false;
-            }
-        }
-        if (mozliwe_do_realizacji) {
-            for (OrdersProdut op : order.getOrdersProdutCollection()) {
-                Products p = op.getIdProduct();
-                p.setLiczbaSztuk(p.getLiczbaSztuk() - op.getLiczbaSztuk());
-                productsFacade.edit(p);
-            }
-            order.setDateEnd(new Date());
-            ordersFacade.edit(order);
-            try {
-                //WYKREOWAC CALY ORDER DO XMLa
-                /*
-                JAXBContext jaxbc;
-                Marshaller m;
+        List<Part> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName())).collect(Collectors.toList());
+        List<String> poprawne = new ArrayList<>();
+        List<String> niepoprawne = new ArrayList<>();
+        Validator validator = (Validator) request.getServletContext().getAttribute("validator");
+        if (validator != null) {
+            for (Part filePart : fileParts) {
+                Source xmlFile = new StreamSource(filePart.getInputStream());
                 try {
-                jaxbc = JAXBContext.newInstance(Orders.class);
-                m = jaxbc.createMarshaller();
-                m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                m.marshal(order, new File("/home/r/Pulpit/Zamówienie_"+order.getId()+".xml"));//handler plik
-                } catch (JAXBException ex) {
-                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
-                doXML.zrobXML(order);
-            } catch (JAXBException ex) {
-                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    validator.validate(xmlFile);
+                    poprawne.add(filePart.getSubmittedFileName());
+                } catch (SAXException ex) {
+                    niepoprawne.add(filePart.getSubmittedFileName());
+                }
 
+            }
         }
-        request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
+        request.setAttribute("poprawne", poprawne);
+        request.setAttribute("niepoprawne", niepoprawne);
+
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

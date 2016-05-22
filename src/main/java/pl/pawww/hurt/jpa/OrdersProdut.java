@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -57,7 +58,7 @@ public class OrdersProdut implements Serializable {
     public Integer getLiczbaSztuk() {
         return liczbaSztuk;
     }
-    
+    @XmlElement
     public void setLiczbaSztuk(Integer liczbaSztuk) {
         this.liczbaSztuk = liczbaSztuk;
     }
@@ -81,7 +82,7 @@ public class OrdersProdut implements Serializable {
     public Orders getIdOrder() {
         return idOrder;
     }
-
+    @XmlTransient
     public void setIdOrder(Orders idOrder) {
         this.idOrder = idOrder;
     }

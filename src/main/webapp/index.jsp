@@ -37,6 +37,30 @@
         <form action="restricted/orders/sendProductsToOrders">
             <input type="submit" value="Przeglądaj zamówienia"/>
         </form>
+        <form method="post" action="validateXML" enctype="multipart/form-data">
+            <input  type="file" name="file" multiple/>
+            <input type="submit" value="Waliduj XML"/>
+        </form>
+        <c:if test="${requestScope.poprawne != null && requestScope.niepoprawne != null}">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Poprawne</td>
+                        <td>Niepoprawne</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><c:forEach var="file" items="${requestScope.poprawne}">
+                                ${file}<br/>
+                            </c:forEach></td>
+                        <td><c:forEach var="file" items="${requestScope.niepoprawne}">
+                                ${file}<br/>
+                            </c:forEach></td>
+                    </tr>
+                </tbody>
+            </table>
+        </c:if>
     </c:if>
 </body>
 </html>

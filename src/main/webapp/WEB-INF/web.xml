@@ -98,6 +98,22 @@
         <servlet-name>modyfikujZamowienie</servlet-name>
         <servlet-class>pl.pawww.hurt.servlets.orders.modyfikujZamowienie</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>usunProdukt</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.products.usunProdukt</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>zrobOrderXML</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.zrobOrderXML</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>validateXML</servlet-name>
+        <servlet-class>pl.pawww.hurt.xml.validateXML</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addOrderByXML</servlet-name>
+        <servlet-class>pl.pawww.hurt.servlets.orders.addOrderByXML</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index.jsp</servlet-name>
         <url-pattern>/index.jsp</url-pattern>
@@ -159,6 +175,22 @@
     <servlet-mapping>
         <servlet-name>modyfikujZamowienie</servlet-name>
         <url-pattern>/restricted/orders/modyfikujZamowienie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>usunProdukt</servlet-name>
+        <url-pattern>/restricted/products/usunProdukt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>zrobOrderXML</servlet-name>
+        <url-pattern>/restricted/orders/zrobOrderXML</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>validateXML</servlet-name>
+        <url-pattern>/validateXML</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addOrderByXML</servlet-name>
+        <url-pattern>/restricted/orders/addOrderByXML</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

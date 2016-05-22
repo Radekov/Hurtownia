@@ -29,20 +29,64 @@
             </form>
 
             <form action="addOrder"><%--Tu dużo zmienić--%>
-                Dodanie nowego zamówienia:
+                Dodanie nowego zamówienia:<br/>
                 Sklep:
                 <select name="sklep">
                     <c:forEach var="shop" items="${requestScope.shops}">
                         <option value="${shop.sklep}">${shop.sklep}</option>
                     </c:forEach>
-                </select>
+                </select><br/>
                 Produkty:
-                <c:forEach var="produkt" items="${requestScope.produkty}">
-                    ${produkt.nazwa}<input type="checkbox" name="produkt" value="${produkt.nazwa}"/>
-                    Ilość:<input type="number" name="${produkt.nazwa}ilosc"/><%--AJAX pojawia się po kliknięciu checkboxa--%>
-                </c:forEach>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Nazwa</td>
+                            <td></td>
+                            <td>Ilość</td>
+                            <td>Zostało</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="produkt" items="${requestScope.produkty}">
+                            <tr>
+                                <td>${produkt.nazwa}</td>
+                                <td><input type="checkbox" name="produkt" value="${produkt.nazwa}"/></td>
+                                <td>Ilość:<input type="number" name="${produkt.nazwa}ilosc"/><%--AJAX pojawia się po kliknięciu checkboxa--%></td>
+                                <td>${produkt.liczbaSztuk}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
                 <input type="submit" value="Dodaj to"/>
             </form>
+
+
+
+            <form action="addOrderByXML" method="post" action="validateXML" enctype="multipart/form-data">
+                Dodaj zamówienia przez pliki xml
+                <input type="file" name="file" multiple/>
+                <input type="submit" value="Dodaj je"/>
+            </form>
+            <c:if test="${requestScope.poprawne != null && requestScope.niepoprawne != null}">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Dodano</td>
+                            <td>Niedodano</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><c:forEach var="file" items="${requestScope.poprawne}">
+                                    ${file}<br/>
+                                </c:forEach></td>
+                            <td><c:forEach var="file" items="${requestScope.niepoprawne}">
+                                    ${file}<br/>
+                                </c:forEach></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </c:if>
         </c:if>
 
     </body>

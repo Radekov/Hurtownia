@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema elementFormDefault="qualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="orders">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="dateEnd"/>
+                <xs:element name="dateStart" type="xs:dateTime" />
+                <xs:element name="idShops">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="adres" type="xs:string" />
+                            <xs:element name="sklep" type="xs:string" />
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:integer" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="produkty">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ordersProdutCollection" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="idProduct">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="cena" type="xs:decimal" />
+                                                    <xs:element name="nazwa" type="xs:string" />
+                                                </xs:sequence>
+                                                <xs:attribute name="id" type="xs:integer" />
+                                                <xs:attribute name="kategoria" type="xs:string" />
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="liczbaSztuk" type="xs:integer" />
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:integer" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:integer" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -56,12 +57,12 @@ public class Shops implements Serializable {
     public Shops(Integer id) {
         this.id = id;
     }
-
+    
     @XmlAttribute
     public Integer getId() {
         return id;
     }
-
+    @XmlAttribute
     public void setId(Integer id) {
         this.id = id;
     }
@@ -73,11 +74,11 @@ public class Shops implements Serializable {
     public String getAdres() {
         return adres;
     }
-
+    @XmlElement
     public void setAdres(String adres) {
         this.adres = adres;
     }
-
+    @XmlElement
     public void setSklep(String sklep) {
         this.sklep = sklep;
     }
@@ -86,7 +87,7 @@ public class Shops implements Serializable {
     public Collection<Orders> getOrdersCollection() {
         return ordersCollection;
     }
-
+    @XmlTransient
     public void setOrdersCollection(Collection<Orders> ordersCollection) {
         this.ordersCollection = ordersCollection;
     }

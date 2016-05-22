@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URL;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -112,6 +113,7 @@ public class FilterOpenBrowser implements Filter {
         
         Throwable problem = null;
         try {
+            
             System.out.println(this.getClass().getName()+" teraz działa filter");
             HttpServletRequest req = (HttpServletRequest) request;
             HttpSession session = req.getSession(false);
@@ -121,6 +123,8 @@ public class FilterOpenBrowser implements Filter {
                 }
             }
             System.out.println(session.getId());
+            
+            
             chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,

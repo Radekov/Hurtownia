@@ -5,36 +5,34 @@
  */
 package pl.pawww.hurt.servlets.orders;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Validator;
+import org.xml.sax.SAXException;
 import pl.pawww.hurt.jpa.Orders;
-import pl.pawww.hurt.jpa.OrdersFacade;
-import pl.pawww.hurt.jpa.OrdersProdut;
-import pl.pawww.hurt.jpa.Products;
-import pl.pawww.hurt.jpa.ProductsFacade;
 
 /**
  *
  * @author r
  */
-public class realizujZamowienie extends HttpServlet {
-
-    @EJB
-    OrdersFacade ordersFacade;
-    @EJB
-    ProductsFacade productsFacade;
+@MultipartConfig
+public class addOrderByXML extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,43 +46,42 @@ public class realizujZamowienie extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Integer id = Integer.parseInt((String) request.getParameter("id"));
-        System.out.println(id);
-        Orders order = ordersFacade.find(id);
-        boolean mozliwe_do_realizacji = true;
-        for (OrdersProdut op : order.getOrdersProdutCollection()) {
-            if (op.getLiczbaSztuk() > op.getIdProduct().getLiczbaSztuk()) {
-                mozliwe_do_realizacji = false;
-            }
+        List<Part> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName())).collect(Collectors.toList());
+        List<String> dodano = new ArrayList<>();
+        List<String> niedodano = new ArrayList<>();
+        Validator validator = (Validator) request.getServletContext().getAttribute("validator");
+        JAXBContext jaxbc = null;
+        Unmarshaller jaxbUnmarshaller = null;
+        try {
+             jaxbc = JAXBContext.newInstance(Orders.class);
+             jaxbUnmarshaller = jaxbc.createUnmarshaller();
+        } catch (JAXBException ex) {
+            Logger.getLogger(addOrderByXML.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (mozliwe_do_realizacji) {
-            for (OrdersProdut op : order.getOrdersProdutCollection()) {
-                Products p = op.getIdProduct();
-                p.setLiczbaSztuk(p.getLiczbaSztuk() - op.getLiczbaSztuk());
-                productsFacade.edit(p);
-            }
-            order.setDateEnd(new Date());
-            ordersFacade.edit(order);
-            try {
-                //WYKREOWAC CALY ORDER DO XMLa
-                /*
-                JAXBContext jaxbc;
-                Marshaller m;
+        if (validator != null && jaxbc !=null && jaxbUnmarshaller != null) {
+            for (Part filePart : fileParts) {
+                Source xmlFile = new StreamSource(filePart.getInputStream());
                 try {
-                jaxbc = JAXBContext.newInstance(Orders.class);
-                m = jaxbc.createMarshaller();
-                m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                m.marshal(order, new File("/home/r/Pulpit/Zamówienie_"+order.getId()+".xml"));//handler plik
+                    validator.validate(xmlFile);
+                    Orders o = (Orders) jaxbUnmarshaller.unmarshal(xmlFile);
+                    
+                    
+                    System.out.println(o);
+                    
+                    
+                    
+                    dodano.add(filePart.getSubmittedFileName());
+                } catch (SAXException ex) {
+                    niedodano.add(filePart.getSubmittedFileName());
                 } catch (JAXBException ex) {
-                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
-                doXML.zrobXML(order);
-            } catch (JAXBException ex) {
-                Logger.getLogger(realizujZamowienie.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    niedodano.add(filePart.getSubmittedFileName());
+                }
 
+            }
         }
-        request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
+        request.setAttribute("poprawne", dodano);
+        request.setAttribute("niepoprawne", niedodano);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

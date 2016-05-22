@@ -28,23 +28,33 @@
                         <td>Liczba Sztuk</td>
                         <td>Cena</td>
                         <td></td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="product" items="${requestScope.products}">
-                    <form action="modyfikujProdukt">
                         <tr>
-                            <td><input type="number" value="${product.id}" name="id" readonly/></td>
-                            <td>${product.nazwa}</td>
-                            <td>${product.kategoria}</td>
-                            <td><input type="number" value="${product.liczbaSztuk}" name="liczbaSztuk"/></td>
-                            <td><input type="text" value="${product.cena}" name="cena"/></td>
-                            <td><input type="submit" value="Modyfikuj"</td>
-                        </tr>
+                    <form action="modyfikujProdukt">
+                        <td><input type="number" value="${product.id}" name="id" readonly/></td>
+                        <td>${product.nazwa}</td>
+                        <td>${product.kategoria}</td>
+                        <td><input type="number" value="${product.liczbaSztuk}" name="liczbaSztuk"/></td>
+                        <td><input type="text" value="${product.cena}" name="cena"/></td>
+                        <td>
+                            <input type="submit" value="Modyfikuj"/>
+                        </td>
                     </form>
-                </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
+                    <td>
+                        <form action="usunProdukt">
+                            <input type="number" name ="id" value="${product.id}" readonly hidden/>
+                            <input type="submit" value="Pozbadz sie tego"/>
+                        </form>
+                    </td>
+                </tr>
+
+            </c:forEach>
+        </tbody>
+    </table>
+</c:if>
 </body>
 </html>

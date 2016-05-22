@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -67,7 +68,7 @@ public class Products implements Serializable {
     public Products(Integer id) {
         this.id = id;
     }
-
+    
     @XmlAttribute
     public Integer getId() {
         return id;
@@ -84,7 +85,7 @@ public class Products implements Serializable {
     public BigDecimal getCena() {
         return cena;
     }
-
+    @XmlElement
     public void setCena(BigDecimal cena) {
         this.cena = cena;
     }
@@ -93,7 +94,7 @@ public class Products implements Serializable {
     public String getKategoria() {
         return kategoria;
     }
-
+    @XmlAttribute
     public void setKategoria(String kategoria) {
         this.kategoria = kategoria;
     }
@@ -102,11 +103,11 @@ public class Products implements Serializable {
     public Integer getLiczbaSztuk() {
         return liczbaSztuk;
     }
-
+    
     public void setLiczbaSztuk(Integer liczbaSztuk) {
         this.liczbaSztuk = liczbaSztuk;
     }
-
+    @XmlElement
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }
