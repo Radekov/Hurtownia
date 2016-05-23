@@ -6,6 +6,7 @@
 package pl.pawww.hurt.filters;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -27,10 +28,11 @@ import pl.pawww.hurt.jpa.Users;
 
 /**
  * Zapisuje aktywność użytkownika
+ *
  * @author r
  */
 public class filterUserActivity implements Filter {
-    
+
     private static final boolean debug = true;
     private String debugActiv;
 
@@ -38,10 +40,10 @@ public class filterUserActivity implements Filter {
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public filterUserActivity() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -68,8 +70,8 @@ public class filterUserActivity implements Filter {
 	    log(buf.toString());
 	}
          */
-    }    
-    
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
@@ -107,39 +109,31 @@ public class filterUserActivity implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         if (debug) {
             log("filterUserActivity:doFilter()");
         }
-        
+
         doBeforeProcessing(request, response);
-        
+
         Throwable problem = null;
         try {
-            System.out.println(this.getClass().getName()+" teraz działa");
             HttpServletRequest req = (HttpServletRequest) request;
-                HttpSession session = req.getSession(false);
-                //Users user =(Users) session.getAttribute("user");
-                //try{
-                    
-                    /*
-                    Hurtownia/"Dzienniki/"+user+".log",true
-                    /\
-                    ||
-                    Jak dostać się
-                    */
-                    /*
-                    BufferedWriter bw =new BufferedWriter(new FileWriter("Dzienniki/"+user.getLogin()+".log",true));//user.getLogin()
-                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    Date acctuall = Calendar.getInstance().getTime();
-                    //req.getRequestURI()
-                    bw.write(format.format(acctuall)+": "+req.getContextPath());
-                    bw.close();
-                    
+            HttpSession session = req.getSession(false);
+            if (session != null) {
+                String login = (String) session.getAttribute("login");
+                if (login != null) {
+                    File file = new File("tmp_logs/"+login+ ".log");
+                    if(file.exists()){
+                        FileWriter fileWriter = new FileWriter(file.getAbsolutePath(), true);
+                        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss:");
+                        Date acctuall = Calendar.getInstance().getTime();
+                        bufferedWriter.write(format.format(acctuall)+login+" używa:"+req.getRequestURI()+"\n");
+                        bufferedWriter.close();
+                    }
                 }
-                catch(IOException e){
-                    
-                }*/
+            }
             chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
@@ -148,7 +142,7 @@ public class filterUserActivity implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
+
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -183,16 +177,16 @@ public class filterUserActivity implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
-    
+
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("filterUserActivity:Initializing filter");
             }
         }
@@ -212,20 +206,20 @@ public class filterUserActivity implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -242,7 +236,7 @@ public class filterUserActivity implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -256,9 +250,9 @@ public class filterUserActivity implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
+
 }

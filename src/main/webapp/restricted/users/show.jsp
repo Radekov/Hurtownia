@@ -14,11 +14,8 @@
     </head>
     <body>
         <a href="index.jsp">INDEX</a>
-    <c:catch var="exception"><h1>${sessionScope.sign}</h1></c:catch>
-    <c:if test="${sessionScope.sign == null}">
-        <%--POWRÓT--%>
-    </c:if>
-   <c:if test="${sessionScope.sign == null}"><%--ZMIENIĆ--%>
+    <c:catch var="exception"><h1>${sessionScope.login}</h1></c:catch>
+   <c:if test="${sessionScope.login != null}"><%--ZMIENIĆ--%>
         <table>
             <thead>
                 <tr>

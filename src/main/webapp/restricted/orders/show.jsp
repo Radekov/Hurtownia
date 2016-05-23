@@ -15,8 +15,8 @@
     </head>
     <body>
         <a href="index.jsp">Główne</a>
-        <c:catch var="exception"><h1>${sessionScope.user.login}</h1></c:catch>
-        <c:if test="${sessionScope.user != null}">
+        <c:catch var="exception"><h1>${sessionScope.login}</h1></c:catch>
+        <c:if test="${sessionScope.login != null}">
             <table>
                 <thead>
                     <tr>

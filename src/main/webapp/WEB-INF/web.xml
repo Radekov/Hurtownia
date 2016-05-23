@@ -22,21 +22,27 @@
     </filter>
     <filter-mapping>
         <filter-name>FilterOpenBrowser</filter-name>
-        <url-pattern>/Hurt/index.jsp</url-pattern>
+        <servlet-name>index.jsp</servlet-name>
     </filter-mapping>
     <filter-mapping>
         <filter-name>filterCheckLogin</filter-name>
-        <url-pattern>/*/restricted/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
+        <url-pattern>/restricted/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>filterUserActivity</filter-name>
-        <url-pattern>/*/restricted/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>pl.pawww.hurt.listeners.ContextListenerEdycji</listener-class>
+    </listener>
+    <listener>
+        <description>HttpSessionListener</description>
+        <listener-class>pl.pawww.hurt.listeners.listenerSesji</listener-class>
+    </listener>
+    <listener>
+        <description>HttpSessionAttributeListener</description>
+        <listener-class>pl.pawww.hurt.listeners.AttributeListenerForLogging</listener-class>
     </listener>
     <servlet>
         <servlet-name>addUser</servlet-name>

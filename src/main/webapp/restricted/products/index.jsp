@@ -13,8 +13,8 @@
     </head>
     <body>
         <a href="../../index.jsp">Główne</a>
-        <c:catch var="exception"><h1>Zalogowany jako: ${sessionScope.user.login}</h1></c:catch>
-        <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
+        <c:catch var="exception"><h1>Zalogowany jako: ${sessionScope.login}</h1></c:catch>
+        <c:if test="${sessionScope.login != null}"><%--ZMIENIĆ--%>
             <form action="showAllProducts">
                 Pokazanie wszystkich:<input type="text" name="nazwa" title="By pokazać wszystke zostaw puste"/>
                 <input type="submit" value="Pokaż wsio"/>

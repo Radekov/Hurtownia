@@ -41,7 +41,7 @@ public class sendProductsToOrders extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        System.out.println(request.getRequestURL());
         response.setContentType("text/html;charset=UTF-8");
         System.out.println(this.getClass().getName()+" teraz działa serwlet");
         List<Products> produkty = productsFacade.findAll();

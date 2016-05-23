@@ -17,7 +17,7 @@
         <c:if test="${not empty exception}">
             <%--POWRÓT--%>
         </c:if>
-        <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
+        <c:if test="${sessionScope.login != null}"><%--ZMIENIĆ--%>
             <form action="showAllOrders">
                 <input type="submit" value="Pokaż wszystkie"/>
             </form>

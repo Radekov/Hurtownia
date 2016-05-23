@@ -12,16 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-    <c:catch var="exception"><h1>Hello ${sessionScope.user.login}</h1></c:catch>
-    <c:if test="${sessionScope.user == null}">
-        <form action="loginServlet" method="POST">
-            Login:<input type="text" name="login"/>
-            Hasło:<input type="password" name="password"/>
-            Zapamiętaj<input type="checkbox" name="zapamietaj"/>
-            <input type="submit" value="Zaloguj"/>
-        </form>
+    <c:catch var="exception"><h1>Hello ${sessionScope.login}</h1></c:catch>
+    <c:if test="${sessionScope.login == null}">
+        <a href="login.html">Zaloguj</a>
     </c:if>
-    <c:if test="${sessionScope.user != null}"><%--ZMIENIĆ--%>
+    <c:if test="${sessionScope.login != null}"><%--ZMIENIĆ--%>
         <form action="logoutServlet">
             <input type="submit" value="Wyloguj"/>
         </form>

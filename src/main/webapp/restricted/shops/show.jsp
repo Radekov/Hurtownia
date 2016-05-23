@@ -5,7 +5,6 @@
 --%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="pl.pawww.hurt.jpa.Users" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,11 +13,8 @@
     </head>
     <body>
         <a href="index.jsp">POWRÓT</a>
-        <c:catch var="exception"><h1>Hello ${sessionScope.sign}</h1></c:catch>
-        <c:if test="${sessionScope.sign == null}">
-            <%--POWRÓT--%>
-        </c:if>
-        <c:if test="${sessionScope.sign == null}">
+        <c:catch var="exception"><h1>Hello ${sessionScope.login}</h1></c:catch>
+        <c:if test="${sessionScope.login != null}">
             <table>
                 <thead>
                     <tr>

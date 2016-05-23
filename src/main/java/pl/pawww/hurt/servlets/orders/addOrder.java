@@ -61,7 +61,6 @@ public class addOrder extends HttpServlet {
         if((boolean)sc.getAttribute("edytOrder")==true)
             request.getRequestDispatcher("sendProductsToOrders").forward(request, response);
         sc.setAttribute("edytOrder", true);
-        System.out.println(this.getClass().getName()+" ten serwlet teraz robi");
         Orders order = new Orders();
         //Ustawienie sklepu
         String sklep = request.getParameter("sklep");
@@ -76,6 +75,9 @@ public class addOrder extends HttpServlet {
         Products produkt;
         List<Products> p;
         String[] produkty = request.getParameterValues("produkt");
+        if(produkty == null){
+            response.sendRedirect("index");
+        }
         Integer[] ilosc = new Integer[produkty.length];
         for (int i = 0; i < produkty.length; i++) {
             ilosc[i] = Integer.parseInt(request.getParameter(produkty[i] + "ilosc"));

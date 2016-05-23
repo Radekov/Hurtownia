@@ -23,9 +23,10 @@ import javax.servlet.http.HttpSession;
 import pl.pawww.hurt.jpa.Users;
 
 /**
- * Uruchmia się przy zasobach z /root/restricted/*
- * Ma za zadanie sprawdzić, czy w sesji jest zalogowany użytkownik, jeśli nie jest,
- * to przekierowuje na stronę główną, a tam jest formularz do logowania
+ * Uruchmia się przy zasobach z /root/restricted/* Ma za zadanie sprawdzić, czy
+ * w sesji jest zalogowany użytkownik, jeśli nie jest, to przekierowuje na
+ * stronę główną, a tam jest formularz do logowania
+ *
  * @author r
  */
 public class filterCheckLogin implements Filter {
@@ -114,22 +115,21 @@ public class filterCheckLogin implements Filter {
 
         Throwable problem = null;
         try {
-            System.out.println(this.getClass().getName()+" teraz działa");
+            System.out.println(this.getClass().getName() + " teraz działa");
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
             HttpSession session = req.getSession(false);
-            Users user = null;
-             if(session != null){
-              user = (Users) session.getAttribute("user");
-              if(user != null)
-                chain.doFilter(request, response);
-             }  
-            else {
-                 System.out.println("Filtr przechodzi do");
-              res.sendRedirect("/Hurt/index.jsp");
-              return;
+            String login = null;
+            if (session != null) {
+                login = (String) session.getAttribute("login");
+                if (login != null) {
+                    chain.doFilter(request, response);
+                } else {
+                    res.sendRedirect("/Hurt/index.jsp");
+                    return;
+                }
             }
-            
+
             //chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,

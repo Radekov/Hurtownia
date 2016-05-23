@@ -34,8 +34,10 @@ public class logoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         for(Cookie c:request.getCookies()){
             c.setMaxAge(0);
+            response.addCookie(c);
         }
         HttpSession session = request.getSession(false);
+        if(session!=null)
         synchronized(session){
             session.removeAttribute("user");
         }
